@@ -1,18 +1,22 @@
 {
     "variables" :{
-        "instance_type": "t2.micro",
-        "subnet_id": "",
-        "source_ami": "",
-        "ssh_username": "ubuntu"
+        "aws_access_key": "{{env `aws_access_key_id`}}",
+        "aws_secret_key": "{{env `aws_secret_access_key`}}",
+        "ami_region" :"{{env `aws_region`}}",
+        "source_ami":"{{env `source_ami`}}",
+        "instance_type": "{{env `instance_type`}}",
+        "build_ami_name": "csye6225_fall_2021_{{timestamp}}"
     },
     "builders" :[
         {
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
             "type": "amazon-ebs",
             "instance_type" : "{{user `instance_type`}}",
             "subnet_id": "{{user `subnet_id`}}",
             "source_ami": "{{user `source_ami`}}",
             "ssh_username": "{{user `ssh_username`}}",
-            "ami_name" : "csye6225_fall_2021_{{timestamp}}",
+            "ami_name" : "{{user `build_ami_name`}}",
             "ami_description": "Ubuntu AMI for CSYE 6225",
             "associate_public_ip_address": true,
             "region": "{{user `ami_region`}}",
@@ -22,6 +26,9 @@
                 "volume_size": 8,
                 "volume_type": "gp2",
                 "delete_on_termination": true
+            },
+            "tags": {
+                "Name": "{{user `build_ami_name`}}"
             }
         }
     ],
