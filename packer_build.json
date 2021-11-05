@@ -5,7 +5,8 @@
         "ami_region" :"{{env `aws_region`}}",
         "source_ami":"{{env `source_ami`}}",
         "instance_type": "{{env `instance_type`}}",
-        "build_ami_name": "csye6225_fall_2021_{{timestamp}}"
+        "build_ami_name": "csye6225_fall_2021_{{timestamp}}",
+        "ssh_username": "{{env `ssh_username`}}"
     },
     "builders" :[
         {
